@@ -1,0 +1,30 @@
+﻿{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "web-app-5bccf",
+          "configurations": {
+            "ios": "1:399497500906:ios:16fe3da798bd3003f69f93",
+            "macos": "1:399497500906:ios:16fe3da798bd3003f69f93",
+            "windows": "1:399497500906:web:2d3bd94e18022ec5f69f93"
+          }
+        }
+      }
+    }
+  }
+}
