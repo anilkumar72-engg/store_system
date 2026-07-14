@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../auth/auth_service.dart';
 import '../core/constants/app_routes.dart';
 import '../services/order_service.dart';
@@ -126,16 +126,34 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             child: const Text('Seed Bamboo Products'),
                           ),
                           const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              _metricCard('Today Sales', '₹${todaySales.toStringAsFixed(2)}', Icons.attach_money),
-                              const SizedBox(width: 10),
-                              _metricCard('Orders Today', '${ordersToday.length}', Icons.shopping_cart),
-                              const SizedBox(width: 10),
-                              _metricCard('Products Sold', '$todayProductsSold', Icons.inventory_2),
-                              const SizedBox(width: 10),
-                              _metricCard('Average Order', '₹${averageOrder.toStringAsFixed(2)}', Icons.trending_up),
-                            ],
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              final width = constraints.maxWidth;
+                              int crossAxisCount = 4;
+                              double childAspectRatio = 3.0;
+                              if (width < 600) {
+                                crossAxisCount = 1;
+                                childAspectRatio = 4.5;
+                              } else if (width < 1000) {
+                                crossAxisCount = 2;
+                                childAspectRatio = 3.5;
+                              }
+
+                              return GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: childAspectRatio,
+                                children: [
+                                  _metricCard('Today Sales', '₹${todaySales.toStringAsFixed(2)}', Icons.attach_money),
+                                  _metricCard('Orders Today', '${ordersToday.length}', Icons.shopping_cart),
+                                  _metricCard('Products Sold', '$todayProductsSold', Icons.inventory_2),
+                                  _metricCard('Average Order', '₹${averageOrder.toStringAsFixed(2)}', Icons.trending_up),
+                                ],
+                              );
+                            },
                           ),
                           const SizedBox(height: 16),
                           Expanded(
@@ -182,7 +200,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               gradient: const LinearGradient(colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)]),
                                               barWidth: 3,
                                               dotData: FlDotData(show: true),
-                                              belowBarData: BarAreaData(show: true, gradient: LinearGradient(colors: [const Color(0xFF2E7D32).withOpacity(0.25), Colors.transparent])),
+                                              belowBarData: BarAreaData(show: true, gradient: LinearGradient(colors: [const Color(0xFF2E7D32).withValues(alpha: 0.25), Colors.transparent])),
                                             ),
                                           ],
                                         ),
@@ -207,19 +225,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Widget _metricCard(String title, String value, IconData icon) {
-    return Expanded(
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              CircleAvatar(backgroundColor: const Color(0xFF2E7D32), child: Icon(icon, color: Colors.white, size: 18)),
-              const SizedBox(width: 10),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54)), const SizedBox(height: 4), Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))]),
-            ],
-          ),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            CircleAvatar(backgroundColor: const Color(0xFF2E7D32), child: Icon(icon, color: Colors.white, size: 18)),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54, fontFamily: 'Poppins', fontSize: 12), overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 2),
+                  Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Poppins'), overflow: TextOverflow.ellipsis),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

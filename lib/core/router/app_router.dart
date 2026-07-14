@@ -1,6 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../admin/admin_dashboard.dart';
-import '../../admin/product_management.dart';
+import '../../screens/product_management_page.dart';
 import '../../admin/orders_management.dart';
 import '../../auth/login_screen.dart';
 import '../../models/order_model.dart';

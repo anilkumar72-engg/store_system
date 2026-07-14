@@ -18,11 +18,10 @@ class ProductGrid extends StatelessWidget {
   });
 
   int _getCrossAxisCount(double width) {
-    if (width >= 1500) return 5;
-    if (width >= 1200) return 4;
-    if (width >= 900) return 3;
-    if (width >= 700) return 2;
-    return 1;
+    if (width >= 1200) return 4; // Large Desktop
+    if (width >= 900) return 3;  // Laptop / normal screen
+    if (width >= 600) return 2;  // Tablet
+    return 1;                    // Mobile
   }
 
   @override
@@ -59,7 +58,7 @@ class ProductGrid extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(right: 6),
                       child: ChoiceChip(
-                        label: Text(category, style: TextStyle(color: selected ? Colors.white : Colors.black87, fontWeight: FontWeight.w600)),
+                        label: Text(category, style: TextStyle(color: selected ? Colors.white : Colors.black87, fontWeight: FontWeight.w600, fontFamily: 'Poppins')),
                         selected: selected,
                         selectedColor: const Color(0xFF2E7D32),
                         backgroundColor: Colors.white,
@@ -79,21 +78,25 @@ class ProductGrid extends StatelessWidget {
                         children: const [
                           Icon(Icons.search_off, size: 52, color: Colors.grey),
                           SizedBox(height: 8),
-                          Text('No products found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          Text('No products found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Poppins')),
                           SizedBox(height: 4),
-                          Text('Try another keyword or category', style: TextStyle(color: Colors.grey)),
+                          Text('Try another keyword or category', style: TextStyle(color: Colors.grey, fontFamily: 'Poppins')),
                         ],
                       ),
                     )
                   : LayoutBuilder(builder: (context, constraints) {
                       final count = _getCrossAxisCount(constraints.maxWidth);
+                      final cardWidth = (constraints.maxWidth - (count - 1) * 10 - 16) / count;
+                      // Bounded card height is 450px
+                      final double ratio = cardWidth / 450;
+
                       return GridView.builder(
                         padding: const EdgeInsets.all(8),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: count,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 0.8,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: ratio,
                         ),
                         itemCount: products.length,
                         itemBuilder: (context, index) {
@@ -111,4 +114,3 @@ class ProductGrid extends StatelessWidget {
     );
   }
 }
-
