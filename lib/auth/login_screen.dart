@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/constants/app_routes.dart';
 import 'auth_service.dart';
+import '../widgets/footer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -69,9 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: Container(
-              width: 440,
-              padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 440,
+                  padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -249,6 +253,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+                ),
+                const SizedBox(height: 16),
+                const Footer(),
+              ],
             ),
           ),
         ),

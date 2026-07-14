@@ -7,6 +7,7 @@ import '../models/order_model.dart';
 import '../widgets/sidebar.dart';
 import '../widgets/topbar.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../widgets/footer.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -211,6 +212,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                             ),
                           ),
+                          const Footer(),
                         ],
                       );
                     },
